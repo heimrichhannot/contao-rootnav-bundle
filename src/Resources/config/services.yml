@@ -1,0 +1,3 @@
+services:
+  huh.rootnav.listener.callback:
+    class: HeimrichHannot\RootnavBundle\EventListener\CallbackListener
