@@ -8,12 +8,29 @@
 
 namespace HeimrichHannot\RootnavBundle\EventListener;
 
-use Contao\Config;
+use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
 use Contao\DataContainer;
+use Contao\Model\Collection;
 use Contao\PageModel;
+use Contao\StringUtil;
 
 class CallbackListener
 {
+    /**
+     * @var ContaoFrameworkInterface
+     */
+    private $framework;
+    /**
+     * @var string
+     */
+    private $urlSuffix;
+
+    public function __construct(ContaoFrameworkInterface $framework, string $urlSuffix)
+    {
+        $this->framework = $framework;
+        $this->urlSuffix = $urlSuffix;
+    }
+
     /**
      * Get all pages from pages field as array.
      *
@@ -23,25 +40,30 @@ class CallbackListener
      */
     public function getPages(DataContainer $dc)
     {
-        $arrOptions = [];
+        $options = [];
 
-        if (!$dc->activeRecord && !is_array($dc->activeRecord->pages)) {
-            return $arrOptions;
+        if (!$dc->activeRecord) {
+            return $options;
         }
 
-        $arrPages = deserialize($dc->activeRecord->pages, true);
-        $arrOrder = deserialize($dc->activeRecord->orderPages, true);
+        $pagesData = StringUtil::deserialize($dc->activeRecord->pages, true);
+        $order = StringUtil::deserialize($dc->activeRecord->orderPages, true);
 
-        $objPages = PageModel::findMultipleByIds($arrPages, ['order' => 'FIELD(id,'.implode(',', $arrOrder).')']);
-
-        if (null === $objPages) {
-            return $arrOptions;
+        if (empty($pagesData)) {
+            return $options;
         }
 
-        while ($objPages->next()) {
-            $arrOptions[$objPages->id] = $arrValues[$objPages->id] = $objPages->title.' ('.$objPages->alias.Config::get('urlSuffix').')';
+        /** @var PageModel|Collection $pages */
+        $pages = $this->framework->getAdapter(PageModel::class)->findMultipleByIds($pagesData, ['order' => 'FIELD(id,'.implode(',', $order).')']);
+
+        if (!$pages) {
+            return $options;
         }
 
-        return $arrOptions;
+        foreach ($pages as $page) {
+            $options[$page->id] = $page->title.' ('.$page->alias.($this->urlSuffix ? '.'.$this->urlSuffix : '').')';
+        }
+
+        return $options;
     }
 }

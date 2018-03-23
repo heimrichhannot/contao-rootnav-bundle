@@ -37,6 +37,10 @@ class ModuleRootnav extends ModuleCustomnav
             $groups = $user->groups;
         }
 
+        if (!$this->pages || empty($this->pages)) {
+            return;
+        }
+
         // Get all active pages
         /** @var RootnavPageModel $rootPages */
         $rootPages = $framework->getAdapter(RootnavPageModel::class)->findPublishedRootPagesByIds($this->pages);

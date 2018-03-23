@@ -32,7 +32,7 @@ class RootnavPageModel extends PageModel
     public static function findPublishedRootPagesByIds(array $ids, array $options = [])
     {
         $framework = System::getContainer()->get('contao.framework');
-        if (!is_array($ids) || empty($ids)) {
+        if (empty($ids)) {
             return null;
         }
 
@@ -48,6 +48,6 @@ class RootnavPageModel extends PageModel
             $options['order'] = $framework->createInstance(Database::class)->findInSet("$t.id", $ids);
         }
 
-        return static::findBy($columns, null, $options);
+        return $framework->getAdapter(PageModel::class)->findBy($columns, null, $options);
     }
 }
