@@ -8,6 +8,13 @@
 
 Provides an navigation to navigate between website roots. Therefore its working best in multi domain setup.
 
+## Requirements
+
+* PHP >= 7.1
+* Contao >= 4.1 (only tested with >= 4.4)
+
+> If you need Contao 3 compability, check out the [Rootnav Module](https://github.com/heimrichhannot/contao-rootnav).
+
 ## Install
 
 * Install with composer
@@ -19,6 +26,5 @@ composer require heimrichhannot/contao-rootnav-bundle
 
 ## Usage
 
-
-
+Just create the frontendmodule of type 'Root navigation', configure it and include it in your layout or where you want to display it. 
 
