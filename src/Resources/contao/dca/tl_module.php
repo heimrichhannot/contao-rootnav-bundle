@@ -18,8 +18,12 @@ array_insert($dc['palettes']['__selector__'], 0 , 'defineTarget');
 /**
  * Palettes
  */
-$dc['palettes']['rootnav'] = $dc['palettes']['customnav'];
-$dc['palettes']['rootnav'] = str_replace('pages', ',pages,defineTarget', $dc['palettes']['rootnav']);
+$dc['palettes'][\HeimrichHannot\RootnavBundle\Module\ModuleRootnav::NAME] = $dc['palettes']['customnav'];
+$dc['palettes'][\HeimrichHannot\RootnavBundle\Module\ModuleRootnav::NAME] = str_replace(
+    'pages',
+    'pages,defineTarget',
+    $dc['palettes'][\HeimrichHannot\RootnavBundle\Module\ModuleRootnav::NAME]
+);
 
 /**
  * Subpalettes

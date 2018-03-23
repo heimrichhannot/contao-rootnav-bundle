@@ -29,8 +29,6 @@ class ModuleRootnav extends ModuleCustomnav
         $container = System::getContainer();
         $framework = $container->get('contao.framework');
 
-        global $objPage;
-
         $groups = [];
         // Get all groups of the current front end user
         if (FE_USER_LOGGED_IN) {
@@ -40,7 +38,8 @@ class ModuleRootnav extends ModuleCustomnav
         }
 
         // Get all active pages
-        $rootPages = RootnavPageModel::findPublishedRootPagesByIds($this->pages);
+        /** @var RootnavPageModel $rootPages */
+        $rootPages = $framework->getAdapter(RootnavPageModel::class)->findPublishedRootPagesByIds($this->pages);
 
         // Return if there are no pages
         if (!$rootPages) {
@@ -50,8 +49,8 @@ class ModuleRootnav extends ModuleCustomnav
         $arrPages = [];
 
         // Sort the array keys according to the given order
-        if ('' !== $this->orderPages) {
-            $tmp = deserialize($this->orderPages);
+        if (!$this->orderPages) {
+            $tmp = StringUtil::deserialize($this->orderPages);
 
             if (!empty($tmp) && is_array($tmp)) {
                 $arrPages = array_map(function () {}, array_flip($tmp));
@@ -91,9 +90,19 @@ class ModuleRootnav extends ModuleCustomnav
         $this->Template->items = !empty($items) ? $objTemplate->parse() : '';
     }
 
+    /**
+     * @param $arrPages
+     * @param $groups
+     * @param $arrTargetPages
+     *
+     * @return array
+     */
     protected function generateNavigationItems($arrPages, $groups, $arrTargetPages)
     {
         $framework = System::getContainer()->get('contao.framework');
+
+        global $objPage;
+
         foreach ($arrPages as $arrPage) {
             // Skip hidden pages (see #5832)
             if (!is_array($arrPage)) {
@@ -151,5 +160,7 @@ class ModuleRootnav extends ModuleCustomnav
                 $items[] = $row;
             }
         }
+
+        return $items;
     }
 }
