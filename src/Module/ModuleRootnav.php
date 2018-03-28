@@ -8,7 +8,6 @@
 
 namespace HeimrichHannot\RootnavBundle\Module;
 
-use Contao\Controller;
 use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\FrontendUser;
@@ -50,24 +49,25 @@ class ModuleRootnav extends ModuleCustomnav
             return;
         }
 
-        $arrPages = [];
+        $pages = [];
 
         // Sort the array keys according to the given order
-        if (!$this->orderPages) {
+        if ($this->orderPages) {
             $tmp = StringUtil::deserialize($this->orderPages);
 
             if (!empty($tmp) && is_array($tmp)) {
-                $arrPages = array_map(function () {}, array_flip($tmp));
+                $pages = array_map(function () {
+                }, array_flip($tmp));
             }
         }
 
         // Add the items to the pre-sorted array
-        while ($rootPages->next()) {
-            $arrPages[$rootPages->id] = $rootPages->current()->loadDetails()->row(); // see #3765
+        foreach ($rootPages as $rootPage) {
+            $pages[$rootPage->id] = $rootPage->loadDetails()->row(); // see #3765
         }
 
         // Set default template
-        if ('' === $this->navigationTpl) {
+        if (empty($this->navigationTpl)) {
             $this->navigationTpl = 'nav_default';
         }
 
@@ -79,7 +79,7 @@ class ModuleRootnav extends ModuleCustomnav
 
         $arrTargetPages = StringUtil::deserialize($this->pageTargets, true);
 
-        $items = $this->generateNavigationItems($arrPages, $groups, $arrTargetPages);
+        $items = $this->generateNavigationItems($pages, $groups, $arrTargetPages);
 
         // Add classes first and last
         $items[0]['class'] = trim($items[0]['class'].' first');
@@ -95,35 +95,37 @@ class ModuleRootnav extends ModuleCustomnav
     }
 
     /**
-     * @param $arrPages
-     * @param $groups
-     * @param $arrTargetPages
+     * @param array $pages
+     * @param array $groups
+     * @param array $targetPages
      *
      * @return array
      */
-    protected function generateNavigationItems($arrPages, $groups, $arrTargetPages)
+    protected function generateNavigationItems(array $pages, $groups, $targetPages)
     {
-        $framework = System::getContainer()->get('contao.framework');
-
         global $objPage;
+        $framework = System::getContainer()->get('contao.framework');
+        $router = System::getContainer()->get('contao.routing.url_generator');
 
-        foreach ($arrPages as $arrPage) {
+        $items = [];
+
+        foreach ($pages as $page) {
             // Skip hidden pages (see #5832)
-            if (!is_array($arrPage)) {
+            if (!is_array($page)) {
                 continue;
             }
 
-            $_groups = StringUtil::deserialize($arrPage['groups']);
+            $pageGroups = StringUtil::deserialize($page['groups']);
 
             // Do not show protected pages unless a back end or front end user is logged in
-            if (!$arrPage['protected'] || BE_USER_LOGGED_IN || (is_array($_groups) && count(array_intersect($_groups, $groups))) || $this->showProtected) {
+            if (!$page['protected'] || BE_USER_LOGGED_IN || (is_array($pageGroups) && count(array_intersect($pageGroups, $groups))) || $this->showProtected) {
                 // Get href
-                $href = $framework->getAdapter(Controller::class)->generateFrontendUrl($arrPage, null, $arrPage['rootLanguage'], true);
+                $href = $router->generate($page['alias']);
 
                 // Remove root page alias from href
-                if ('root' === $arrPage['type']) {
+                if ('root' === $page['type']) {
                     $arrHref = parse_url($href);
-                    $arrHref['path'] = str_replace($arrPage['alias'], '', $arrHref['path']);
+                    $arrHref['path'] = str_replace($page['alias'], '', $arrHref['path']);
 
                     if ('/' !== substr($arrHref['path'], 0, 1)) {
                         $arrHref['path'] = '/'.$arrHref['path'];
@@ -137,24 +139,24 @@ class ModuleRootnav extends ModuleCustomnav
                     $href .= isset($arrHref['path']) ? $arrHref['path'] : '';
                 }
 
-                $trail = in_array($arrPage['id'], $objPage->trail, true);
+                $trail = in_array($page['id'], $objPage->trail, true);
 
-                $strClass = trim($arrPage['cssClass'].($trail ? ' trail' : ''));
-                $row = $arrPage;
+                $strClass = trim($page['cssClass'].($trail ? ' trail' : ''));
+                $row = $page;
 
                 $row['isActive'] = false;
                 $row['isTrail'] = $trail;
                 $row['class'] = $strClass;
-                $row['title'] = specialchars($arrPage['title'], true);
-                $row['pageTitle'] = specialchars($arrPage['pageTitle'], true);
-                $row['link'] = $arrPage['title'];
+                $row['title'] = specialchars($page['title'], true);
+                $row['pageTitle'] = specialchars($page['pageTitle'], true);
+                $row['link'] = $page['title'];
                 $row['href'] = $href;
-                $row['nofollow'] = (0 === strncmp($arrPage['robots'], 'noindex', 7));
+                $row['nofollow'] = (0 === strncmp($page['robots'], 'noindex', 7));
                 $row['target'] = '';
-                $row['description'] = str_replace(["\n", "\r"], [' ', ''], $arrPage['description']);
+                $row['description'] = str_replace(["\n", "\r"], [' ', ''], $page['description']);
 
-                $defineTarget = 'redirect' === $arrPage['type'] && $arrPage['target'];
-                $defineTarget = $this->defineTarget && in_array($arrPage['id'], $arrTargetPages, true);
+                $defineTarget = 'redirect' === $page['type'] && $page['target'];
+                $defineTarget = $this->defineTarget && in_array($page['id'], $targetPages, true);
 
                 // Override the link target
                 if ($defineTarget) {
