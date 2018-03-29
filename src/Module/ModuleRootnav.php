@@ -147,15 +147,14 @@ class ModuleRootnav extends ModuleCustomnav
                 $row['isActive'] = false;
                 $row['isTrail'] = $trail;
                 $row['class'] = $strClass;
-                $row['title'] = specialchars($page['title'], true);
-                $row['pageTitle'] = specialchars($page['pageTitle'], true);
+                $row['title'] = StringUtil::specialchars($page['title'], true);
+                $row['pageTitle'] = StringUtil::specialchars($page['pageTitle'], true);
                 $row['link'] = $page['title'];
                 $row['href'] = $href;
                 $row['nofollow'] = (0 === strncmp($page['robots'], 'noindex', 7));
                 $row['target'] = '';
                 $row['description'] = str_replace(["\n", "\r"], [' ', ''], $page['description']);
 
-                $defineTarget = 'redirect' === $page['type'] && $page['target'];
                 $defineTarget = $this->defineTarget && in_array($page['id'], $targetPages, true);
 
                 // Override the link target

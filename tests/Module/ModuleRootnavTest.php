@@ -23,7 +23,7 @@ class ModuleRootnavTest extends ContaoTestCase
         parent::setUp();
 
         $routerMock = $this->mockAdapter(['generate']);
-        $routerMock->method('generate')->willReturn('/home.html');
+        $routerMock->method('generate')->willReturnOnConsecutiveCalls('/home.html', 'home.html');
 
         $container = $this->mockContainer();
         $container->set('contao.framework', $this->createFrameworkMock());
@@ -197,6 +197,7 @@ class ModuleRootnavTest extends ContaoTestCase
 
         $objPage = new \stdClass();
         $objPage->trail = [2];
+        $objPage->outputFormat = 'xhtml';
 
         $GLOBALS['objPage'] = $objPage;
 
@@ -220,30 +221,69 @@ class ModuleRootnavTest extends ContaoTestCase
         ]);
         $this->assertEmpty($result);
 
-//        $result = $testMethod->invokeArgs($module, [
-//            [
-//                [
-//                    'id'        => 1,
-//                    'alias'     => 'example-org',
-//                    'type'      => 'root',
-//                    'pageTitle' => 'example.org',
-//                    'description' => '',
-//                    'groups'    => serialize([1, 2, 3]),
-//                    'protected' => false
-//                ],
-//                [
-//                    'id'        => 2,
-//                    'alias'     => 'index',
-//                    'type'      => 'regular',
-//                    'pageTitle' => 'Home',
-//                    'description' => '',
-//                    'groups'    => serialize([4, 5, 6]),
-//                    'protected' => false
-//                ]
-//            ],
-//            [],
-//            []
-//        ]);
-//        $this->assertEmpty($result);
+        $result = $testMethod->invokeArgs($module, [
+            [
+                [
+                    'id' => 1,
+                    'alias' => 'example-org',
+                    'type' => 'root',
+                    'pageTitle' => 'example.org',
+                    'title' => 'example',
+                    'description' => '',
+                    'groups' => serialize([1, 2, 3]),
+                    'protected' => false,
+                    'cssClass' => '',
+                    'robots' => 'nofollow',
+                ],
+                [
+                    'id' => 2,
+                    'alias' => 'index',
+                    'type' => 'regular',
+                    'pageTitle' => 'Home',
+                    'title' => 'example Home',
+                    'description' => '',
+                    'groups' => serialize([4, 5, 6]),
+                    'protected' => false,
+                    'cssClass' => '',
+                    'robots' => '',
+                ],
+            ],
+            [],
+            [],
+        ]);
+        $this->assertCount(2, $result);
+
+        $module->defineTarget = true;
+        $result = $testMethod->invokeArgs($module, [
+            [
+                [
+                    'id' => 1,
+                    'alias' => 'example-org',
+                    'type' => 'root',
+                    'pageTitle' => 'example.org',
+                    'title' => 'example',
+                    'description' => '',
+                    'groups' => serialize([1, 2, 3]),
+                    'protected' => false,
+                    'cssClass' => '',
+                    'robots' => 'nofollow',
+                ],
+                [
+                    'id' => 2,
+                    'alias' => 'index',
+                    'type' => 'regular',
+                    'pageTitle' => 'Home',
+                    'title' => 'example Home',
+                    'description' => '',
+                    'groups' => serialize([4, 5, 6]),
+                    'protected' => false,
+                    'cssClass' => '',
+                    'robots' => '',
+                ],
+            ],
+            [],
+            [1],
+        ]);
+        $this->assertCount(2, $result);
     }
 }
