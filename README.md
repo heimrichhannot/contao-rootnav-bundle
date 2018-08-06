@@ -8,6 +8,11 @@
 
 Provides an navigation to navigate between website roots. Therefore its working best in multi domain setup.
 
+## Features
+
+* Frontend Module allows creating a navigation containing root pages
+* [Encore Bundle](https://github.com/heimrichhannot/contao-encore-bundle) support
+
 ## Requirements
 
 * PHP >= 7.1
@@ -27,4 +32,8 @@ composer require heimrichhannot/contao-rootnav-bundle
 ## Usage
 
 Just create the frontendmodule of type 'Root navigation', configure it and include it in your layout or where you want to display it. 
+
+### Encore support
+
+If you use this bundle together with encore bundle, you need to active `contao-rootnav-bundle` as Active entry in your page configuration, if you want to use the default mobile view.
 

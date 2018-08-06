@@ -1,0 +1,7 @@
+huh:
+  encore:
+    entries:
+      - { name: "contao-rootnav-bundle", requiresCss: false, head: false, file: "vendor/heimrichhannot/contao-rootnav-bundle/src/Resources/public/js/contao-rootnav-bundle.es6.js"}
+    legacy:
+      js:
+        - huh_rootnav

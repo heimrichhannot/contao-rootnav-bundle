@@ -234,6 +234,7 @@ class ModuleRootnavTest extends ContaoTestCase
                     'protected' => false,
                     'cssClass' => '',
                     'robots' => 'nofollow',
+                    'dns' => 'example.org',
                 ],
                 [
                     'id' => 2,
@@ -246,6 +247,7 @@ class ModuleRootnavTest extends ContaoTestCase
                     'protected' => false,
                     'cssClass' => '',
                     'robots' => '',
+                    'dns' => 'example.org',
                 ],
             ],
             [],
@@ -267,6 +269,7 @@ class ModuleRootnavTest extends ContaoTestCase
                     'protected' => false,
                     'cssClass' => '',
                     'robots' => 'nofollow',
+                    'dns' => 'example.org',
                 ],
                 [
                     'id' => 2,
