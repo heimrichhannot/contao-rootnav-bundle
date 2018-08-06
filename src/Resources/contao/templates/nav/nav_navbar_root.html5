@@ -33,8 +33,14 @@
 	<?php if($this->level == 'level_1'): ?>
 </div>
 <?php endif; ?>
-<?php if($this->level == 'level_1'): ?><div class="nav-select visible-xs visible-sm"><select class="form-control"><?php endif; ?>
+<?php if($this->level == 'level_1'): ?>
+<div class="nav-select visible-xs visible-sm">
+    <select class="form-control">
+<?php endif; ?>
 	<?php foreach ($this->items as $item): ?>
 			<option value="<?php echo $item['href']; ?>"<?php if($item['isTrail']):?> selected="selected"<?php endif; ?>><?php echo $item['link']; ?></option>
 	<?php endforeach; ?>
-<?php if($this->level == 'level_1'): ?></select></div><?php endif; ?>
+<?php if($this->level == 'level_1'): ?>
+    </select>
+</div>
+<?php endif; ?>
