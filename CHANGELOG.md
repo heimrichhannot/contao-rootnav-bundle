@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1] - 2018-09-07
+
+### Fixed
+
+- Server error 500 while trying to warmup cache due to `Uncaught Error: Call to undefined method Contao\\ManagerBundle\\HttpKernel\\ContaoCache::getProjectDir() ` while invoking `config_encore.yml`
+
 ## [1.1.0] - 2018-08-06
 
 #### Added
