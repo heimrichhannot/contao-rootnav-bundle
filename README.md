@@ -37,3 +37,11 @@ Just create the frontendmodule of type 'Root navigation', configure it and inclu
 
 If you use this bundle together with encore bundle, you need to active `contao-rootnav-bundle` as Active entry in your page configuration, if you want to use the default mobile view.
 
+## Migration
+
+If you upgrade from rootnav module to rootnav bundle, please note that the frontend module type has changes. For automatic upgrade we provice a migration command do the renaming in the datasebase automatically for you.
+
+```
+php vendor/bin/contao-console huh:rootnav:migration
+```
+
