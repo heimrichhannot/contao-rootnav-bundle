@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (c) 2018 Heimrich & Hannot GmbH
+ * Copyright (c) 2019 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
  */
@@ -93,8 +93,8 @@ class ModuleRootnavTest extends ContaoTestCase
 
     public function testCompile()
     {
-        if (!defined('FE_USER_LOGGED_IN')) {
-            define('FE_USER_LOGGED_IN', false);
+        if (!\defined('FE_USER_LOGGED_IN')) {
+            \define('FE_USER_LOGGED_IN', false);
         }
 
         $reflectionClass = new \ReflectionClass(ModuleRootnav::class);
@@ -155,8 +155,8 @@ class ModuleRootnavTest extends ContaoTestCase
      */
     public function testCompileLogin()
     {
-        if (!defined('FE_USER_LOGGED_IN')) {
-            define('FE_USER_LOGGED_IN', true);
+        if (!\defined('FE_USER_LOGGED_IN')) {
+            \define('FE_USER_LOGGED_IN', true);
         }
 
         $reflectionClass = new \ReflectionClass(ModuleRootnav::class);
@@ -187,8 +187,8 @@ class ModuleRootnavTest extends ContaoTestCase
 
     public function testGenerateNavigationItems()
     {
-        if (!defined('BE_USER_LOGGED_IN')) {
-            define('BE_USER_LOGGED_IN', false);
+        if (!\defined('BE_USER_LOGGED_IN')) {
+            \define('BE_USER_LOGGED_IN', false);
         }
 
         $reflectionClass = new \ReflectionClass(ModuleRootnav::class);

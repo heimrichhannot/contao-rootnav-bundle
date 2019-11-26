@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (c) 2018 Heimrich & Hannot GmbH
+ * Copyright (c) 2019 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
  */
@@ -56,7 +56,7 @@ class ModuleRootnav extends ModuleCustomnav
         if ($this->orderPages) {
             $tmp = StringUtil::deserialize($this->orderPages);
 
-            if (!empty($tmp) && is_array($tmp)) {
+            if (!empty($tmp) && \is_array($tmp)) {
                 $pages = array_map(function () {
                 }, array_flip($tmp));
             }
@@ -74,7 +74,7 @@ class ModuleRootnav extends ModuleCustomnav
 
         $objTemplate = $framework->createInstance(FrontendTemplate::class, [$this->navigationTpl]);
 
-        $objTemplate->type = get_class($this);
+        $objTemplate->type = \get_class($this);
         $objTemplate->cssID = $this->cssID; // see #4897 and 6129
         $objTemplate->level = 'level_1';
 
@@ -84,7 +84,7 @@ class ModuleRootnav extends ModuleCustomnav
 
         // Add classes first and last
         $items[0]['class'] = trim($items[0]['class'].' first');
-        $last = count($items) - 1;
+        $last = \count($items) - 1;
         $items[$last]['class'] = trim($items[$last]['class'].' last');
 
         $objTemplate->items = $items;
@@ -111,14 +111,14 @@ class ModuleRootnav extends ModuleCustomnav
 
         foreach ($pages as $page) {
             // Skip hidden pages (see #5832)
-            if (!is_array($page)) {
+            if (!\is_array($page)) {
                 continue;
             }
 
             $pageGroups = StringUtil::deserialize($page['groups']);
 
             // Do not show protected pages unless a back end or front end user is logged in
-            if (!$page['protected'] || BE_USER_LOGGED_IN || (is_array($pageGroups) && count(array_intersect($pageGroups, $groups))) || $this->showProtected) {
+            if (!$page['protected'] || BE_USER_LOGGED_IN || (\is_array($pageGroups) && \count(array_intersect($pageGroups, $groups))) || $this->showProtected) {
                 // Remove root page alias from href
                 if ('root' === $page['type']) {
                     $href = $router->generate($page['alias'], [
@@ -138,7 +138,7 @@ class ModuleRootnav extends ModuleCustomnav
                     $href = $router->generate($page['alias']);
                 }
 
-                $trail = in_array($page['id'], $objPage->trail, true);
+                $trail = \in_array($page['id'], $objPage->trail, true);
 
                 $strClass = trim($page['cssClass'].($trail ? ' trail' : ''));
                 $row = $page;
@@ -154,7 +154,7 @@ class ModuleRootnav extends ModuleCustomnav
                 $row['target'] = '';
                 $row['description'] = str_replace(["\n", "\r"], [' ', ''], $page['description']);
 
-                $defineTarget = $this->defineTarget && in_array($page['id'], $targetPages, true);
+                $defineTarget = $this->defineTarget && \in_array($page['id'], $targetPages, true);
 
                 // Override the link target
                 if ($defineTarget) {

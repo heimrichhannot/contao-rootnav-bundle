@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (c) 2018 Heimrich & Hannot GmbH
+ * Copyright (c) 2019 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
  */
@@ -19,8 +19,8 @@ class RootnavPageModelTest extends ContaoTestCase
     protected function setUp()
     {
         parent::setUp();
-        if (!defined('BE_USER_LOGGED_IN')) {
-            define('BE_USER_LOGGED_IN', false);
+        if (!\defined('BE_USER_LOGGED_IN')) {
+            \define('BE_USER_LOGGED_IN', false);
         }
         $pageModelAdapter = $this->mockAdapter(['findBy']);
         $pageModelAdapter->method('findBy')->willReturnCallback(function ($col = [], $val = [], $opt = []) {
@@ -63,8 +63,8 @@ class RootnavPageModelTest extends ContaoTestCase
      */
     public function skipTestFindPublishedRootPagesByIdsFrontend()
     {
-        if (!defined('BE_USER_LOGGED_IN')) {
-            define('BE_USER_LOGGED_IN', true);
+        if (!\defined('BE_USER_LOGGED_IN')) {
+            \define('BE_USER_LOGGED_IN', true);
         }
         /** @var \PHPUnit_Framework_MockObject_MockObject|RootnavPageModel $mock */
         $mock = $this->getMockBuilder(RootnavPageModel::class)->setMethods(null)->disableOriginalConstructor()

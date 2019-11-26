@@ -4,3 +4,7 @@ services:
     arguments:
       - '@contao.framework'
       - '%contao.url_suffix%'
+
+  HeimrichHannot\RootnavBundle\Command\MigrationCommand:
+    autowire: true
+    autoconfigure: true

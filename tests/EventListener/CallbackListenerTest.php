@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (c) 2018 Heimrich & Hannot GmbH
+ * Copyright (c) 2019 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
  */
@@ -29,7 +29,7 @@ class CallbackListenerTest extends ContaoTestCase
         $pageModelAdapter = $this->mockAdapter(['findMultipleByIds']);
         $pageModelAdapter->method('findMultipleByIds')->willReturnCallback(function ($ids, $options) {
             ++$this->pageModelMethodCallCount;
-            if (in_array(0, $ids, true)) {
+            if (\in_array(0, $ids, true)) {
                 return null;
             }
             $collection = [];

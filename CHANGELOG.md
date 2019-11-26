@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.2.0] - 2019-11-26
+- added migration command
+- some refactoring
+
 ## [1.1.1] - 2018-09-07
 
 ### Fixed
