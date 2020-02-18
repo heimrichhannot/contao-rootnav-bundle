@@ -29,10 +29,13 @@
         "php-http/guzzle6-adapter": "^1.0",
         "php-http/message-factory": "^1.0.2",
         "php-coveralls/php-coveralls": "^2.0",
-        "symfony/phpunit-bridge": "^3.2"
+        "symfony/phpunit-bridge": "^3.4.26||^4.1.12"
     },
     "suggest": {
-        "heimrichhannot/contao-encore-bundle": "Provide webpack encore asset support."
+        "heimrichhannot/contao-encore-bundle": "^1.5"
+    },
+    "conflict": {
+        "heimrichhannot/contao-encore-bundle": "<1.5"
     },
     "autoload": {
         "psr-4": {

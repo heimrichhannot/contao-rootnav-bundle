@@ -1,18 +1,18 @@
 <?php
 
 /*
- * Copyright (c) 2019 Heimrich & Hannot GmbH
+ * Copyright (c) 2020 Heimrich & Hannot GmbH
  *
  * @license LGPL-3.0-or-later
  */
 
 namespace HeimrichHannot\RootnavBundle\Module;
 
-use Contao\CoreBundle\Routing\UrlGenerator;
 use Contao\Environment;
 use Contao\FrontendTemplate;
 use Contao\FrontendUser;
 use Contao\ModuleCustomnav;
+use Contao\PageModel;
 use Contao\StringUtil;
 use Contao\System;
 use HeimrichHannot\RootnavBundle\Model\RootnavPageModel;
@@ -96,7 +96,6 @@ class ModuleRootnav extends ModuleCustomnav
     }
 
     /**
-     * @param array $pages
      * @param array $groups
      * @param array $targetPages
      *
@@ -119,24 +118,8 @@ class ModuleRootnav extends ModuleCustomnav
 
             // Do not show protected pages unless a back end or front end user is logged in
             if (!$page['protected'] || BE_USER_LOGGED_IN || (\is_array($pageGroups) && \count(array_intersect($pageGroups, $groups))) || $this->showProtected) {
-                // Remove root page alias from href
-                if ('root' === $page['type']) {
-                    $href = $router->generate($page['alias'], [
-                        '_domain' => $page['dns'],
-                    ], UrlGenerator::ABSOLUTE_URL);
-
-                    $arrHref = parse_url($href);
-                    $arrHref['path'] = str_replace($page['alias'], '', $arrHref['path']);
-
-                    // build url without root page alias
-                    $href = '';
-                    $href .= isset($arrHref['scheme']) ? $arrHref['scheme'].'://' : '';
-                    $href .= isset($arrHref['host']) ? $arrHref['host'] : '';
-                    $href .= isset($arrHref['port']) ? ':'.$arrHref['port'] : '';
-                    $href .= isset($arrHref['path']) ? $arrHref['path'] : '';
-                } else {
-                    $href = $router->generate($page['alias']);
-                }
+                $model = PageModel::findByPk($page['id']);
+                $href = $model->getAbsoluteUrl();
 
                 $trail = \in_array($page['id'], $objPage->trail, true);
 

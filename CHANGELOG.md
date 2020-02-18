@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.3.0] - 2020-02-17
+- fixed wrong local was used when a page is only available in another locale then the current
+- update encore configuration, increased optional encore bundle dependency to 1.5
+
 ## [1.2.0] - 2019-11-26
 - added migration command
 - some refactoring
