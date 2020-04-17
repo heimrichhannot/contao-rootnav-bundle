@@ -108,6 +108,7 @@ class ModuleRootnav extends ModuleCustomnav
 
         $items = [];
 
+        /** @var PageModel $page */
         foreach ($pages as $page) {
             // Skip hidden pages (see #5832)
             if (!\is_array($page)) {
@@ -118,7 +119,7 @@ class ModuleRootnav extends ModuleCustomnav
 
             // Do not show protected pages unless a back end or front end user is logged in
             if (!$page['protected'] || BE_USER_LOGGED_IN || (\is_array($pageGroups) && \count(array_intersect($pageGroups, $groups))) || $this->showProtected) {
-                $model = PageModel::findByPk($page['id']);
+                $model = PageModel::findFirstPublishedByPid($page['id']);
                 $href = $model->getAbsoluteUrl();
 
                 $trail = \in_array($page['id'], $objPage->trail, true);

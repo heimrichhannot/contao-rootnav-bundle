@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.1] - 2020-04-17
+- fixed root page url was used instead of index page url
+
 ## [1.3.0] - 2020-02-17
 - fixed wrong local was used when a page is only available in another locale then the current
 - update encore configuration, increased optional encore bundle dependency to 1.5
