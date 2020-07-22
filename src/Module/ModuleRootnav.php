@@ -119,7 +119,11 @@ class ModuleRootnav extends ModuleCustomnav
 
             // Do not show protected pages unless a back end or front end user is logged in
             if (!$page['protected'] || BE_USER_LOGGED_IN || (\is_array($pageGroups) && \count(array_intersect($pageGroups, $groups))) || $this->showProtected) {
-                $model = PageModel::findFirstPublishedByPid($page['id']);
+                if ('root' === $page['type']) {
+                    $model = PageModel::findFirstPublishedByPid($page['id']);
+                } else {
+                    $model = PageModel::findByPk($page['id']);
+                }
                 $href = $model->getAbsoluteUrl();
 
                 $trail = \in_array($page['id'], $objPage->trail, true);

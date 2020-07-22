@@ -1,5 +1,8 @@
 # Changelog
 
+## [1.3.2] - 2020-07-22
+- fixed non-root pages leading to exception
+
 ## [1.3.1] - 2020-04-17
 - fixed root page url was used instead of index page url
 
