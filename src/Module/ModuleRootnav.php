@@ -93,6 +93,10 @@ class ModuleRootnav extends ModuleCustomnav
         $this->Template->skipId = 'skipNavigation'.$this->id;
         $this->Template->skipNavigation = StringUtil::specialchars($GLOBALS['TL_LANG']['MSC']['skipNavigation']);
         $this->Template->items = !empty($items) ? $objTemplate->parse() : '';
+
+        if (\Contao\System::getContainer()->has('huh.encore.asset.frontend')) {
+            \Contao\System::getContainer()->get('huh.encore.asset.frontend')->addActiveEntrypoint('contao-rootnav-bundle');
+        }
     }
 
     /**

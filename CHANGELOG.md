@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.4.0] - 2022-09-30
+- Fixed: js
+- Updated: add entry automatically
+
 ## [1.3.2] - 2020-07-22
 - fixed non-root pages leading to exception
 

@@ -1,13 +1,17 @@
 (function(){
-
-    var rootnav = {
+    let rootnav = {
         onReady : function(){
-            document.querySelectorAll('.nav-select select').addEventListener('change', function(){
-                window.location = this.querySelector().value;
-            });
+            let rootnavs = document.querySelectorAll('.mod_huh_rootnav_module .nav-select select');
+
+            if (rootnavs) {
+                rootnavs.forEach(nav => {
+                    nav.addEventListener('change', function(){
+                        window.location = nav.value;
+                    });
+                });
+            }
         }
     };
-
     if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
         rootnav.onReady();
     } else {

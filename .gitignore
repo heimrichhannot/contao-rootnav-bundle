@@ -1,2 +1,9 @@
+.DS_Store
+Thumbs.db
+.sass-cache
+.sass_cache
+*.orig
 vendor
 composer.lock
+.history
+*.code-workspace
