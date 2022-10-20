@@ -8,3 +8,6 @@ services:
   HeimrichHannot\RootnavBundle\Command\MigrationCommand:
     autowire: true
     autoconfigure: true
+
+  HeimrichHannot\RootnavBundle\Asset\EncoreExtension:
+    autoconfigure: true

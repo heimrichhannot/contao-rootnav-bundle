@@ -20,7 +20,8 @@
         "php": "~7.1",
         "contao/core-bundle": "~4.1",
         "heimrichhannot/contao-encore-contracts": "^1.0",
-        "heimrichhannot/contao-utils-bundle": "^2.25"
+        "heimrichhannot/contao-utils-bundle": "^2.25",
+        "symfony/service-contracts": "^1.0 || ^2.0 || ^3.0"
     },
     "require-dev": {
         "contao/test-case": "^1.1",
