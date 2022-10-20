@@ -19,6 +19,7 @@
     "require": {
         "php": "~7.1",
         "contao/core-bundle": "~4.1",
+        "heimrichhannot/contao-encore-contracts": "^1.0",
         "heimrichhannot/contao-utils-bundle": "^2.25"
     },
     "require-dev": {
