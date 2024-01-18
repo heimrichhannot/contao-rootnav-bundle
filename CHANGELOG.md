@@ -1,6 +1,6 @@
 # Changelog
 
-## [Unreleased] - 2024-01-18
+## [1.5.0] - 2024-01-18
 - Changed: implement encore contracts
 - Changed: some code refactoring
 - Fixed: edit module not working

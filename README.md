@@ -4,7 +4,7 @@
 [![](https://img.shields.io/packagist/dt/heimrichhannot/contao-rootnav-bundle.svg)](https://packagist.org/packages/heimrichhannot/contao-rootnav-bundle)
 
 
-Provides an navigation to navigate between website roots. Therefore its working best in multi domain setup.
+Provides a navigation to navigate between website roots. Therefore its working best in multi domain setup.
 
 ## Features
 
@@ -13,10 +13,8 @@ Provides an navigation to navigate between website roots. Therefore its working 
 
 ## Requirements
 
-* PHP >= 7.1
-* Contao >= 4.1 (only tested with >= 4.4)
-
-> If you need Contao 3 compability, check out the [Rootnav Module](https://github.com/heimrichhannot/contao-rootnav).
+* PHP >= 7.4
+* Contao >= 4.9
 
 ## Install
 
