@@ -8,33 +8,31 @@
 
 namespace HeimrichHannot\RootnavBundle\EventListener;
 
-use Contao\CoreBundle\Framework\ContaoFrameworkInterface;
+use Contao\CoreBundle\Framework\ContaoFramework;
+use Contao\CoreBundle\ServiceAnnotation\Callback;
 use Contao\DataContainer;
 use Contao\Model\Collection;
 use Contao\PageModel;
 use Contao\StringUtil;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CallbackListener
 {
-    /**
-     * @var ContaoFrameworkInterface
-     */
-    private $framework;
-    /**
-     * @var string
-     */
-    private $urlSuffix;
+    private ContaoFramework $framework;
+    private ParameterBagInterface $parameterBag;
 
-    public function __construct(ContaoFrameworkInterface $framework, string $urlSuffix)
+    public function __construct(ContaoFramework $framework, ParameterBagInterface $parameterBag)
     {
         $this->framework = $framework;
-        $this->urlSuffix = $urlSuffix;
+        $this->parameterBag = $parameterBag;
     }
 
     /**
      * Get all pages from pages field as array.
      *
      * @return array The pages
+     *
+     * @Callback(table="tl_module", target="fields.pageTargets.options")
      */
     public function getPages(DataContainer $dc)
     {
@@ -58,8 +56,10 @@ class CallbackListener
             return $options;
         }
 
+        $urlSuffix = $this->parameterBag->get('contao.url_suffix') ? '.'.$this->parameterBag->get('contao.url_suffix') : '';
+
         foreach ($pages as $page) {
-            $options[$page->id] = $page->title.' ('.$page->alias.($this->urlSuffix ? '.'.$this->urlSuffix : '').')';
+            $options[$page->id] = $page->title.' ('.$page->alias.$urlSuffix.')';
         }
 
         return $options;

@@ -1,11 +1,5 @@
 services:
-  huh.rootnav.listener.callback:
-    class: HeimrichHannot\RootnavBundle\EventListener\CallbackListener
-    arguments:
-      - '@contao.framework'
-      - '%contao.url_suffix%'
-
   HeimrichHannot\RootnavBundle\:
-    resource: '../../{Asset,Command}/*'
+    resource: '../../{Asset,Command,EventListener}/*'
     autowire: true
     autoconfigure: true

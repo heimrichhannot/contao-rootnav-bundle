@@ -2,7 +2,8 @@
 
 ## [Unreleased] - 2024-01-18
 - Changed: implement encore contracts
-
+- Changed: some code refactoring
+- Fixed: edit module not working
 
 ## [1.4.0] - 2022-09-30
 - Fixed: js
