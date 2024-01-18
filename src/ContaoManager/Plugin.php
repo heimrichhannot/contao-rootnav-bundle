@@ -20,7 +20,7 @@ use HeimrichHannot\RootnavBundle\HeimrichHannotContaoRootnavBundle;
 use HeimrichHannot\UtilsBundle\Container\ContainerUtil;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-class Plugin implements BundlePluginInterface, ExtensionPluginInterface, ConfigPluginInterface
+class Plugin implements BundlePluginInterface, ConfigPluginInterface
 {
     /**
      * Gets a list of autoload configurations for this bundle.
@@ -34,23 +34,6 @@ class Plugin implements BundlePluginInterface, ExtensionPluginInterface, ConfigP
                 ContaoCoreBundle::class,
             ]),
         ];
-    }
-
-    /**
-     * Allows a plugin to override extension configuration.
-     *
-     * @param string $extensionName
-     *
-     * @return array<string,mixed>
-     */
-    public function getExtensionConfig($extensionName, array $extensionConfigs, ContainerBuilder $container)
-    {
-        return ContainerUtil::mergeConfigFile(
-            'huh_encore',
-            $extensionName,
-            $extensionConfigs,
-            __DIR__.'/../Resources/config/config_encore.yml'
-        );
     }
 
     /**

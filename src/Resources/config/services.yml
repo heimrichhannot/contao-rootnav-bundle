@@ -5,6 +5,7 @@ services:
       - '@contao.framework'
       - '%contao.url_suffix%'
 
-  HeimrichHannot\RootnavBundle\Command\MigrationCommand:
+  HeimrichHannot\RootnavBundle\:
+    resource: '../../{Asset,Command}/*'
     autowire: true
     autoconfigure: true

@@ -1,5 +1,9 @@
 # Changelog
 
+## [Unreleased] - 2024-01-18
+- Changed: implement encore contracts
+
+
 ## [1.4.0] - 2022-09-30
 - Fixed: js
 - Updated: add entry automatically
