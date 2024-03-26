@@ -50,7 +50,10 @@ class CallbackListener
         }
 
         /** @var PageModel|Collection $pages */
-        $pages = $this->framework->getAdapter(PageModel::class)->findMultipleByIds($pagesData, ['order' => 'FIELD(id,'.implode(',', $order).')']);
+        $pages = $this->framework->getAdapter(PageModel::class)->findMultipleByIds(
+            $pagesData,
+            empty($order) ? [] : ['order' => 'FIELD(id,' . implode(',', $order) . ')']
+        );
 
         if (!$pages) {
             return $options;

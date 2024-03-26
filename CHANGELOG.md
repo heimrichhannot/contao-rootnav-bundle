@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.5.1] - 2024-03-26
+- Fixed: backend exception in newer contao versions
+- Fixed: dependencies
+
 ## [1.5.0] - 2024-01-18
 - Changed: implement encore contracts
 - Changed: some code refactoring
